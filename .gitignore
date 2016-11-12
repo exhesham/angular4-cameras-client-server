@@ -1,3 +1,2 @@
 .idea/
-/node_modules
-/server_logs.txt
+node_modules/

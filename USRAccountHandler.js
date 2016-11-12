@@ -4,7 +4,7 @@
 var crypto = require('crypto')
 var logger = require('bunyan').createLogger({name: 'USR',stream: process.stdout, level: 'info','src':true});
 var usersRepository  = {
-    "admin" : {"password":"fffff","role":"admin"}
+    "admin" : {"password":"theysentmedowntotheriver","role":"admin"}
 }
 var sessions = {};
 function parseCookies (request) {
