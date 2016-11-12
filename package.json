@@ -1,0 +1,25 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "author": {
+    "name": "Hesham Yassin",
+    "email": "exhesham@gmail.com"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "bunyan": "^1.8.1",
+    "child_process": "^1.0.2",
+    "exec": "^0.2.1",
+    "express": "^4.14.0",
+    "forever": "^0.15.2",
+    "pngjs": "^2.3.1",
+    "process": "^0.11.5",
+    "request": "^2.74.0",
+    "tcp-port-used": "^0.1.2",
+    "v4l2camera": "^1.0.4"
+  },
+  "scripts": {
+    "start": "./scripts/init; forever start --uid USRMainServer ./USRMainServer.js",
+    "stop": "forever stop  USRMainServer"
+  }
+}
