@@ -458,7 +458,7 @@ function loadCamera(index,callback){
 	logger.info("loading camera #",index)
     child_process.exec([__dirname + '/scripts/startvid '+ index], function(err, out, code) {
         logger.error(err);
-        logger.error(out);
+        logger.info(out,err);
 		if(err==null){
 			logger.info("Will stream the camera to a file");
 			var recordFileMJPEG=__dirname +"/mjpeg_not_compressed_cam"+index+".mjpg";
