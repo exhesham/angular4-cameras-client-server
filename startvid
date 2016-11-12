@@ -1,0 +1,5 @@
+VIDEO_DIR=/dev/video$1
+if [ -z $1 ]; then
+VIDEO_DIR=/dev/video0
+fi
+cd /home/pi/mjpg-streamer; /home/pi/mjpg-streamer/mjpg_streamer -i "/home/pi/mjpg-streamer/input_uvc.so  -d $VIDEO_DIR -y YUYV -n -f 15 -r 640x480" -o "/home/pi/mjpg-streamer/output_http.so -w /home/pi/mjpg-streamer/www -p 777$1"
