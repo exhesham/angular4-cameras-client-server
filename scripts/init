@@ -1,0 +1,20 @@
+#!/bin/bash
+rm -rf /root/.forever/USR.log
+rm -rf /root/.forever/USRMainServer.log
+rm -rf /home/pi/UnderSurvillance/logs/*
+#cat << EOF > /etc/init.d/usrinit.sh 
+#forever stopall
+#forever start /home/pi/UnderSurvillance/USRMainServer.js
+#EOF
+#chmod u+x /etc/init.d/usrinit.sh
+echo starting
+date > /home/pi/UnderSurvillance/init.log
+cd /home/pi/UnderSurvillance/
+#/etc/init.d/node-app start >> /home/pi/UnderSurvillance/init.log
+#forever stopall > /home/pi/UnderSurvillance/init.log
+netstat -tlpn | grep 4330
+if [ ! $? -eq 0 ]; then
+#	forever start --uid USR /home/pi/UnderSurvillance/USRMainServer.js >> /home/pi/UnderSurvillance/init.log
+	node /home/pi/UnderSurvillance/USRMainServer.js &
+fi
+#node /home/pi/UnderSurvillance/USRMainServer.js &
