@@ -459,19 +459,19 @@ function loadCamera(index,callback){
     child_process.exec([__dirname + '/scripts/startvid '+ index], function(err, out, code) {
         logger.error(err);
         logger.info(out,err);
-		if(err==null){
-			logger.info("Will stream the camera to a file");
-			var recordFileMJPEG=__dirname +"/mjpeg_not_compressed_cam"+index+".mjpg";
-			var recordFileOutputMP4=__dirname +"/mp4_cam"+index+".mjpg";
-			child_process.exec([" nohup  wget -O "+recordFileMJPEG+"  http://127.0.0.1:7770/?action=stream &",
-			"echo pid=$!", "avconv -i "+recordFileMJPEG+" -t 600  "+recordFileOutputMP4], function(err, out, code) {
-				console.log("started streaming on file. exec result is(err,out,code)= ",err,out,code);
-				if(callback != undefined){
-					callback();
-				}
-				
-			})
+		if(callback != undefined){
+			callback();
 		}
+		// if(err==null){
+			// logger.info("Will stream the camera to a file");
+			// var recordFileMJPEG=__dirname +"/mjpeg_not_compressed_cam"+index+".mjpg";
+			// var recordFileOutputMP4=__dirname +"/mp4_cam"+index+".mjpg";
+			// child_process.exec([" nohup  wget -O "+recordFileMJPEG+"  http://127.0.0.1:7770/?action=stream &",
+			// "echo pid=$!", "avconv -i "+recordFileMJPEG+" -t 600  "+recordFileOutputMP4], function(err, out, code) {
+				// console.log("started streaming on file. exec result is(err,out,code)= ",err,out,code);
+				
+			// })
+		// }
         //process.exit(code);
     });
 }
