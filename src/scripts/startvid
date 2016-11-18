@@ -25,7 +25,7 @@ while [ -z SHOULD_STOP ]; do
         netstat -tlpn
         echo "mjpeg goes to file $mjpegbufferfile"
         echo "mp4 goes to file $mp4outputfile"
-        wget  -O "$mjpegbufferfile"  http://127.0.0.1:777$VIDEO_ID/?action=stream &
+        nohup wget  -O "$mjpegbufferfile"  http://127.0.0.1:777$VIDEO_ID/?action=stream &
         while ! [ -f "$mjpegbufferfile" ];
         do
             echo "#"
@@ -37,13 +37,16 @@ while [ -z SHOULD_STOP ]; do
         #sleep 3s
 		echo "Recording the video"
         avconv -i "$mjpegbufferfile" -t 600 "$mp4outputfile"
+		
         MP4_PID=$!
         sleep 600s
+		echo "======================================================================================="
 		echo "Delete old record"
+		echo "======================================================================================="
 		rm -f  $mjpegbufferfile
         echo "The MP4 Finished"
-        kill $MP4_PID
         kill -9 $WGET_PID
+        kill $MP4_PID
         rm -f $mp4outputfile
 		
 done
