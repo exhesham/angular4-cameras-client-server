@@ -1,13 +1,49 @@
-VIDEO_DIR=/dev/video$1
-if [ -z $1 ]; then
-	VIDEO_DIR=/dev/video0
-	$1=0
+#!/bin/bash
+#pkill  mjpg_streame
+VIDEO_ID=$1
+RECORD_PATH="/home/pi/UnderSurvillance/records"
+
+if [ ! -d $RECORD_PATH ]; then
+	mkdir -p "$RECORD_PATH"
 fi
+
+if [ -z $1 ]; then
+        $VIDEO_ID=0
+fi
+VIDEO_DIR=/dev/video$VIDEO_ID
 echo "will record on video VIDEO_DIR=$VIDEO_DIR"
-cd /home/pi/mjpg-streamer; /home/pi/mjpg-streamer/mjpg_streamer -i "/home/pi/mjpg-streamer/input_uvc.so  -d $VIDEO_DIR -y YUYV -n -f 15 -r 640x480" -o "/home/pi/mjpg-streamer/output_http.so -w /home/pi/mjpg-streamer/www -p 777$1" &
-nohup  wget -O ~/outpufilenamep.mjpg  http://127.0.0.1:7770/?action=stream &
-echo "pidMJPEG=$!"
-mp4outputfile="/home/pi/UnderSurvillance/src/mp4outputfile.$1.mp4"
-mjpegbufferfile="/home/pi/UnderSurvillance/src/uncompressedmjpec.$1.mjpeg"
-avconv -i "$mjpegbufferfile" -t 600 "$mp4outputfile"
-echo "pidMP4=$!"
+cd /home/pi/mjpg-streamer; /home/pi/mjpg-streamer/mjpg_streamer -i "/home/pi/mjpg-streamer/input_uvc.so  -d $VIDEO_DIR -y YUYV -n -f 15 -r 640x480" -o "/home/pi/mjpg-streamer/output_http.so -w /home/pi/mjpg-streamer/www -p 777$VIDEO_ID" &
+until pids=$(pidof mjpg_streamer)
+do
+    sleep 1
+done
+pidof mjpg_streamer
+SHOULD_STOP=
+while [ -z SHOULD_STOP ]; do
+        mp4outputfile="$RECORD_PATH/mp4outputfile.$VIDEO_ID.`date +%s`.mp4"
+        mjpegbufferfile="$RECORD_PATH/uncompressedmjpec.$VIDEO_ID.`date +%s`.mjpeg"
+        netstat -tlpn
+        echo "mjpeg goes to file $mjpegbufferfile"
+        echo "mp4 goes to file $mp4outputfile"
+        wget  -O "$mjpegbufferfile"  http://127.0.0.1:777$VIDEO_ID/?action=stream &
+        while ! [ -f "$mjpegbufferfile" ];
+        do
+            echo "#"
+            sleep 1
+        done
+
+        WGET_PID=$!
+        echo WGET_PID=$WGET_PID
+        #sleep 3s
+		echo "Recording the video"
+        avconv -i "$mjpegbufferfile" -t 600 "$mp4outputfile"
+        MP4_PID=$!
+        sleep 600s
+		echo "Delete old record"
+		rm -f  $mjpegbufferfile
+        echo "The MP4 Finished"
+        kill $MP4_PID
+        kill -9 $WGET_PID
+        rm -f $mp4outputfile
+		
+done
