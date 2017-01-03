@@ -32,7 +32,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 //https key and certificate
 var options = {
     cert: fs.readFileSync(__dirname + "/../" + 'thunderclouding.crt')  ,
-    key: fs.readFileSync(__dirname + "/../" +'thundercloudingemeraldclouding.pem')
+    key: fs.readFileSync(__dirname + "/../" +'thundercloudingemeraldclouding.pem'),
+	host: '0.0.0.0'
 };
 var availableCameras ={};
 /*****************************************************************************************************************/
