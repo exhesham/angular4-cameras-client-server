@@ -15,7 +15,7 @@ fi
 
 VIDEO_DIR=/dev/video$VIDEO_ID
 echo "will record on video VIDEO_DIR=$VIDEO_DIR"
-nohup mjpg_streamer -i "$RECORD_DIR/input_uvc.so  -d $VIDEO_DIR -y YUYV -n -f 15 -r 640x480" -o "$RECORD_DIR/output_http.so -w $RECORD_DIR/www -p 777$VIDEO_ID" &
+nohup mjpg_streamer -i "input_uvc.so  -d $VIDEO_DIR -y YUYV -n -f 15 -r 640x480" -o "output_http.so -w www -p 777$VIDEO_ID" &
 until pids=$(pidof mjpg_streamer)
 do
     sleep 1
@@ -29,7 +29,7 @@ while [ -z SHOULD_STOP ]; do
         echo "mjpeg goes to file $mjpegbufferfile"
         echo "mp4 goes to file $mp4outputfile"
         nohup wget  -O "$mjpegbufferfile"  http://127.0.0.1:777$VIDEO_ID/?action=stream &
-        while ! [ -f "$mjpegbufferfile" ];
+        while ! [ -e "$mjpegbufferfile" ];
         do
             echo "#"
             sleep 1

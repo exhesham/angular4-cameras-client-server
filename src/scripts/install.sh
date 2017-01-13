@@ -9,6 +9,11 @@ function validate(){
 }
 function install_mjpg_streamer(){
 	echo "Will install mjpg streamer...."
+	mjpg_streamer --version
+	if [ $? -eq 0 ]; then
+		echo "mjpg_streamer is already installed...nothing to do!"
+		exit 0
+	fi 
 	echo "update os"
 	sudo apt-get update -y
 	validate
@@ -25,7 +30,6 @@ function install_mjpg_streamer(){
 	validate
 	echo "untar package"
 	sudo tar xvzf mjpg-streamer.tar.gz
-	cd mjpg-streamer
 	validate
 	echo "install libjpeg8-dev"
 	sudo apt-get install libjpeg8-dev -y
@@ -36,16 +40,19 @@ function install_mjpg_streamer(){
 	
 	cd mjpg-streamer/mjpg-streamer
 	validate
-	make
+	sudo make
 	validate
 }
 
 function pupiolate_package(){
 
-	EXPORT_PATH='export PATH=$PATH:/opt/mjpg_streamer'
+	EXPORT_PATH='export PATH=$PATH:/opt/mjpg_streamer/mjpg-streamer/mjpg-streamer/'
+	EXPORT_LDPATH='export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mjpg_streamer/mjpg-streamer/mjpg-streamer/'
 	cat ~/.bashrc  | grep "$EXPORT_PATH"
 	if [ ! $? -eq 0 ]; then
 		echo $EXPORT_PATH >> ~/.bashrc
+		echo $EXPORT_LDPATH >> ~/.bashrc
+		source ~/.bashrc
 	fi
 }
 
