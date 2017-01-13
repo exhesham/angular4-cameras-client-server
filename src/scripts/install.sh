@@ -21,10 +21,10 @@ function install_mjpg_streamer(){
 	if [ ! -e mjpg-streamer.tar.gz ]; then
 		sudo rm -f mjpg-streamer.tar.gz
 	fi
-	wget http://lilnetwork.com/download/raspberrypi/mjpg-streamer.tar.gz
+	sudo wget http://lilnetwork.com/download/raspberrypi/mjpg-streamer.tar.gz
 	validate
 	echo "untar package"
-	tar xvzf mjpg-streamer.tar.gz
+	sudo tar xvzf mjpg-streamer.tar.gz
 	cd mjpg-streamer
 	validate
 	echo "install libjpeg8-dev"
