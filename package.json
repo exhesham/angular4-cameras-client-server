@@ -19,7 +19,8 @@
     "v4l2camera": "^1.0.4"
   },
   "scripts": {
-    "start": "./scripts/init; forever start --uid USRMainServer ./USRMainServer.js",
-    "stop": "forever stop  USRMainServer"
+    "install": "chmod u+x ./src/scripts/install.sh; ./src/scripts/install.sh",
+    "start": "chmod u+x ./src/scripts/start.sh; ./src/scripts/start.sh",
+    "stop": "chmod u+x ./src/scripts/stop.sh; ./src/scripts/stop.sh"
   }
 }
