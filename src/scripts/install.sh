@@ -8,20 +8,32 @@ function validate(){
 	exit 1
 }
 function install_mjpg_streamer(){
+	echo "Will install mjpg streamer...."
+	echo "update os"
 	sudo apt-get update -y
 	validate
+	echo "create path"
 	sudo mkdir -p /opt/mjpg_streamer
 	validate
 	cd /opt/mjpg_streamer
 	validate
+	echo "download package"
+	if [ ! -e mjpg-streamer.tar.gz ]; then
+		sudo rm -f mjpg-streamer.tar.gz
+	fi
 	wget http://lilnetwork.com/download/raspberrypi/mjpg-streamer.tar.gz
 	validate
+	echo "untar package"
 	tar xvzf mjpg-streamer.tar.gz
+	cd mjpg-streamer
 	validate
+	echo "install libjpeg8-dev"
 	sudo apt-get install libjpeg8-dev -y
 	validate
+	echo "install imagemagick"
 	sudo apt-get install imagemagick -y
 	validate
+	
 	cd mjpg-streamer/mjpg-streamer
 	validate
 	make
