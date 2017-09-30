@@ -4,19 +4,20 @@
 <body>
 
 <script>
-    var app = angular.module("myShoppingList", []);
-    app.controller("myCtrl", function($scope) {
-        $scope.products = ["Milk", "Bread", "Cheese"];
+    var app = angular.module("cameraList", []);
+    // get the cameras from the server
+    app.controller("cameraCtrl", function($scope, $http) {
+        $http.get("/cameras/list").then(function(response) {
+            $scope.cameras = response.data;
+        });
     });
 </script>
 
-<div ng-app="myShoppingList" ng-controller="myCtrl">
+<div ng-app="cameraList" ng-controller="cameraCtrl">
     <ul>
-        <li ng-repeat="x in products">{{x}}</li>
+        <li ng-repeat="x in cameras">{{x}}</li>
     </ul>
 </div>
-
-<p>So far we have made an HTML list based on the items of an array.</p>
 
 </body>
 </html>

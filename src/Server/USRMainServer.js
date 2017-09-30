@@ -1,6 +1,8 @@
 /**
  * Created by hesham on 7/2/2016.
  */
+
+/*Imports*/
 var tcpPortUsed = require('tcp-port-used');
 var child_process = require('child_process');
 var request = require('request');
@@ -8,21 +10,29 @@ var https = require('https');
 var account = require(__dirname +'/USRAccountHandler');
 var process = require('process');
 var fs = require('fs');
-var express = require('express');
-var CBRWebserverExposedFiles = require(__dirname +'/CBRWebserverExposedFiles.js');
-var USRUtils = require(__dirname +'/USRUtils.js');
-var path = require("path");
-var logger = require('bunyan').createLogger({name: 'USR',streams:[
- {stream: process.stdout,level: 'info'},
- {path:__dirname +"/logs/USR.log",level: 'info'}
- ]});
+var ini = require('ini');
 var bodyParser = require('body-parser');
 var pngjs = require("pngjs");
 var v4l2camera = require("v4l2camera");
-/*includes */
+var express = require('express');
+var path = require("path");
+
+
+/*Internal Imports*/
+var CBRWebserverExposedFiles = require(__dirname +'/CBRWebserverExposedFiles.js');
+var USRUtils = require(__dirname +'/USRUtils.js');
+
+
+/*def*/
+var config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
+var logger = require('bunyan').createLogger({name: 'USR',streams:[
+ {stream: process.stdout,level: 'info'},
+ {path: config.server.logs,level: 'info'}
+ ]});
+
+
 
 var app = express();
-var RELATIVE_DIR = __dirname + "/";
 
 /// Include the express body parser
 // parse application/x-www-form-urlencoded
@@ -31,8 +41,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 //https key and certificate
 var options = {
-    cert: fs.readFileSync(__dirname + "/../" + 'thunderclouding.crt')  ,
-    key: fs.readFileSync(__dirname + "/../" +'thundercloudingemeraldclouding.pem'),
+    cert: fs.readFileSync(config.server.cert_path)  ,
+    key: fs.readFileSync(config.server.key_path),
 	host: '0.0.0.0'
 };
 var availableCameras ={};
@@ -265,16 +275,16 @@ app.all('/streamvideoPage', function(req, res) {
 });
 /*****************************************************************************************************************/
 /*
- Servlet Name: availableCameras
+ Servlet Name: /cameras/list
  Request Type: GET
  */
-app.post('/availablecameras', function(req, res) {
+app.post('/cameras/list', function(req, res) {
     account.isAuthorized(req,"admin")
         .then(function(data){
-
+            return ["Cam1", "Cam2", "Cam3", "Cam4"];
         })
         .catch(function (err) {
-
+            return [];
         });
 });
 /*****************************************************************************************************************/
@@ -470,8 +480,8 @@ function loadCamera(index,callback){
 }
 
 
-var server = https.createServer(options, app).listen(4330, function () {
-    logger.info('HTTPS started on port 4430');
+var server = https.createServer(options, app).listen(config.server.port, function () {
+    logger.info('HTTPS started on port ' + config.server.port);
 });
 server.timeout = 1000*60*60; // One Hour timeout
 
