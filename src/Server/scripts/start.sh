@@ -11,7 +11,7 @@ function clear_env(){
 function start_app(){
 	netstat -tlpn | grep 4330
 	if [ ! $? -eq 0 ]; then
-		forever start $SRC_DIR/USRMainServer.js -l $SRC_DIR -o $SRC_DIR -e $SRC_DIR -p $SRC_DIR
+		forever start $SRC_DIR/server.js -l $SRC_DIR -o $SRC_DIR -e $SRC_DIR -p $SRC_DIR
 	fi
 }
 

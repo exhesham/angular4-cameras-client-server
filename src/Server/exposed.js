@@ -12,8 +12,6 @@ module.exports.exposed = {
     "portfolio-item.css":{loginRequired:false,name:"./WebClient/css/portfolio-item.css"},
     "bootstrap.min.css":{loginRequired:false,name:"./WebClient/css/bootstrap.min.css"},
     "bootstrap.min.css.map":{loginRequired:false,name:"./WebClient/css/bootstrap.min.css.map"},
-
-
     "favicon.ico":{loginRequired:false,name:"./WebClient/images/favicon.ico"}
 };
 

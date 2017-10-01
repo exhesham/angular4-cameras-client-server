@@ -7,7 +7,7 @@ var tcpPortUsed = require('tcp-port-used');
 var child_process = require('child_process');
 var request = require('request');
 var https = require('https');
-var account = require(__dirname +'/USRAccountHandler');
+var account = require(__dirname +'/accounts');
 var process = require('process');
 var fs = require('fs');
 var ini = require('ini');
@@ -19,8 +19,8 @@ var path = require("path");
 
 
 /*Internal Imports*/
-var CBRWebserverExposedFiles = require(__dirname +'/CBRWebserverExposedFiles.js');
-var USRUtils = require(__dirname +'/USRUtils.js');
+var CBRWebserverExposedFiles = require(__dirname +'/exposed.js');
+var USRUtils = require(__dirname +'/utils.js');
 
 
 /*def*/
@@ -430,7 +430,6 @@ function send_logout_redirect(res){
     logger.info("Called...");
     res.clearCookie("session");
     res.clearCookie("username");
-
     res.redirect('login.html');
 
 }
