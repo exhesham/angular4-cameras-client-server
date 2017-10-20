@@ -16,6 +16,21 @@ Installed Wifi/Internet Access
 
 
 ## Install
+
+### Prerequisites
+
+The server uses the npm `v4l2camera` which require g++ version bigger than 4.9 and also nodejs v4.x.
+In order to install nodejs from the node source, run the next commands:
+```
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+```
+
+It is recommended to update the raspian by running `sudo apt-get update`
+
+### Start
+
 after deploying the project from Github, run the following commands:
 ````
 npm install
