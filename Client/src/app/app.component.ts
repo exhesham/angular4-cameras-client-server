@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CameraComponent } from './cameras.component';
-import {MatButtonModule, MatCheckboxModule, MatCheckbox} from '@angular/material';
+
 
 @Component({
   selector: 'app-root',
