@@ -1,13 +1,13 @@
-import {Component} from 'angular2/core'
+import { Component } from '@angular/core';
 import { CameraService } from './cameras.service';
 
 
 @Component({
-    selector: 'cameras',
+    selector: 'app-cameras',
     template:`{{title}}:
 
             <ul>
-                <li *ngFor="#camera of cameras">
+                <li *ngFor="let camera of cameras">
                         {{ camera }}
                 </li>
             </ul>

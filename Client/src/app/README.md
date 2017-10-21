@@ -7,8 +7,9 @@ npm install -g typescript
 ```
 
 * Install angular CLI
+
 ```
- npm install angular-cli -g
+ npm install @angular/cli -g
 ```
 
 
