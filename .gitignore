@@ -1,2 +1,12 @@
 .idea/
 node_modules/
+/Client/app/app.component.js.map
+/Client/app/boot.js
+/Client/app/boot.js.map
+/Client/app/cameras.component.js
+/Client/app/cameras.component.js.map
+/Client/app/cameras.service.js
+/Client/app/cameras.service.js.map
+/Client/app/app.component.js
+/Client/.vscode
+/Client/.DS_Store

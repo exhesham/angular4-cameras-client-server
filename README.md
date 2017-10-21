@@ -8,11 +8,6 @@ In my testing environment, The project ran on a raspberry pi2 connected to a wif
 
 ## Requirements
 
-nodejs
-npm
-raspberry pi with raspian linux 4.4.13-v7+
-Logitec camera
-Installed Wifi/Internet Access
 
 
 ## Install
