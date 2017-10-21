@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CameraService } from './cameras.service';
-
+import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 
 @Component({
     selector: 'app-cameras',
@@ -11,6 +11,7 @@ import { CameraService } from './cameras.service';
                         {{ camera }}
                 </li>
             </ul>
+            
         `,
         providers:[CameraService]
 
