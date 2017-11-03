@@ -1,18 +1,26 @@
 import { Component } from '@angular/core';
 import { CameraService } from './cameras.service';
-import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 
 @Component({
     selector: 'app-cameras',
-    template:`{{title}}:
+    template:`      
+    <mat-grid-list cols="2" rows="2" >
+      <mat-grid-tile *ngFor="let camera of cameras"
+        [style.background]="camera.color">
+        <mat-grid-tile-header>
+          <span mat-line> Camera {{camera.index}} - {{camera.name}} </span>
+        </mat-grid-tile-header>
+        {{camera.description}}
+        <mat-grid-tile-footer>
+          <button mat-button><mat-icon>camera</mat-icon>View</button>
+          <button mat-button><mat-icon>camera</mat-icon>Record</button>
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+      
+    </mat-grid-list>
 
-            <ul>
-                <li *ngFor="let camera of cameras">
-                        {{ camera }}
-                </li>
-            </ul>
-            
-        `,
+
+    `,
         providers:[CameraService]
 
 })

@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule,
   MatAutocompleteModule,
-  
+
   MatButtonToggleModule,
   MatCardModule,
-  
+
   MatChipsModule,
   MatStepperModule,
   MatDatepickerModule,
@@ -37,16 +37,17 @@ import {MatButtonModule, MatCheckboxModule,
 
 import { AppComponent } from './app.component';
 import { CameraComponent } from './cameras.component';
+import { UnderSurToolbar } from './toolbar.component';
 
 @NgModule({
-  
+
   exports: [MatButtonModule, MatCheckboxModule,
-    
+
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
-    
+
     MatChipsModule,
     MatStepperModule,
     MatDatepickerModule,
@@ -76,7 +77,8 @@ import { CameraComponent } from './cameras.component';
   ],
   declarations: [
     AppComponent,
-    CameraComponent
+    CameraComponent,
+    UnderSurToolbar,
   ],
   imports: [
     MatButtonModule, MatCheckboxModule,
@@ -86,7 +88,7 @@ import { CameraComponent } from './cameras.component';
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
-    
+
     MatChipsModule,
     MatStepperModule,
     MatDatepickerModule,
@@ -115,6 +117,6 @@ import { CameraComponent } from './cameras.component';
     MatTooltipModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, UnderSurToolbar]
 })
 export class AppModule { }
