@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 #http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html
 from flask import Flask, jsonify
-from flask import render_template
+from flask import send_file
 import os
 
 app = Flask(__name__)
@@ -53,7 +53,10 @@ def main_template(name=None):
     print name
     if not name:
         name = 'index.html'
-    return render_template(name, name=name)
+
+    resource_path =os.path.join('templates', name)
+    print os.path.exists(resource_path)
+    return send_file(resource_path)
 
 
 @app.route('/api/camera/list', methods=['GET'])
