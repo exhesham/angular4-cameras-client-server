@@ -47,15 +47,18 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'templates'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+@app.route('/assets/images/<image>')
 @app.route('/<name>')
 @app.route('/')
-def main_template(name=None):
-    print name
-    if not name:
-        name = 'index.html'
+def main_template(name=None,image=None):
 
-    resource_path =os.path.join('templates', name)
-    print os.path.exists(resource_path)
+    if not name and not image:
+        name = 'index.html'
+    if image:
+        resource_path =os.path.join('templates','assets','images', image)
+    else:
+        resource_path =os.path.join('templates', name)
+    print resource_path
     return send_file(resource_path)
 
 
@@ -65,4 +68,4 @@ def get_cameras():
 
 if __name__ == '__main__':
     #app.run(debug=True, port=8081,host="0.0.0.0", ssl_context=('server_cert.crt','server_key.pem'),  threaded=True)
-    app.run(debug=True, port=8080,host="0.0.0.0", threaded=True)
+    app.run(debug=False, port=8080,host="0.0.0.0", threaded=True)
