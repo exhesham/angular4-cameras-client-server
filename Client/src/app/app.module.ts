@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule,
@@ -84,6 +85,7 @@ import { UnderSurToolbar } from './toolbar.component';
     MatButtonModule, MatCheckboxModule,
     BrowserModule,
     BrowserAnimationsModule,
+	HttpClientModule,
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -116,7 +118,7 @@ import { UnderSurToolbar } from './toolbar.component';
     MatToolbarModule,
     MatTooltipModule,
   ],
-  providers: [],
+  providers: [HttpClientModule],
   bootstrap: [AppComponent, UnderSurToolbar]
 })
 export class AppModule { }

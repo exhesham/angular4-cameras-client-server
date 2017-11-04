@@ -27,6 +27,7 @@ THE SOFTWARE.
 from flask import Flask, jsonify
 from flask import send_file
 import os
+import json
 
 app = Flask(__name__)
 
@@ -35,11 +36,20 @@ app = Flask(__name__)
 # context.use_certificate_file('server_cert.crt')
 
 from flask import send_from_directory
+@app.route('/api/cameras/all')
+def list_cameras():
+    return json.dumps([{'index': 1, 'name': 'Outside west', 'description': 'street view', 'color': 'lightblue', 'rows': 1, 'cols': 1},
+      {'index': 2, 'name': 'Outside north', 'description': 's street view ', 'color': 'lightgreen', 'rows': 1, 'cols': 2},
+      {'index': 3, 'name': 'Outside east', 'description': 'street view 2', 'color': 'lightpink', 'rows': 2, 'cols': 1},
+      {'index': 4, 'name': 'Outside south 1', 'description': 'street view 3', 'color': '#DDBDF1', 'rows': 2, 'cols': 1}])
+
+
 @app.route('/image/<name>')
 def image_logo(name):
     print "log from ",app.root_path
     return send_from_directory(os.path.join(app.root_path, 'templates'),
                                name, mimetype='image/vnd.microsoft.icon')
+
 
 @app.route('/favicon.ico')
 def favicon():

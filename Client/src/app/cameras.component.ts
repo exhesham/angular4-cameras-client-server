@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { CameraService } from './cameras.service';
+import {Component, OnInit} from '@angular/core';
+import {CameraService} from './cameras.service';
 
 @Component({
-    selector: 'app-cameras',
-    template:`      
+  selector: 'app-cameras',
+  template: `
     <mat-grid-list cols="2" rows="2" >
       <mat-grid-tile *ngFor="let camera of cameras"
-        [style.background]="camera.color">
+                     [style.background]="camera.color">
         <mat-grid-tile-header>
           <span mat-line> Camera {{camera.index}} - {{camera.name}} </span>
         </mat-grid-tile-header>
@@ -14,20 +14,23 @@ import { CameraService } from './cameras.service';
         <mat-grid-tile-footer>
           <button mat-button><mat-icon>camera</mat-icon>View</button>
           <button mat-button><mat-icon>camera</mat-icon>Record</button>
-        </mat-grid-tile-footer>
-      </mat-grid-tile>
-      
-    </mat-grid-list>
 
-
-    `,
-        providers:[CameraService]
+  `,
+  providers: [CameraService]
 
 })
-export class CameraComponent{
-    cameras;
-    title = "available cameras"
-    constructor(cameraService: CameraService){
-        this.cameras = cameraService.getCameras()
-    }
+export class CameraComponent implements OnInit {
+  cameras;
+  title = "available cameras"
+
+  constructor(private cameraService: CameraService) {
+
+  }
+
+  ngOnInit(): void {
+    this.cameraService.getCameras().subscribe(data => {
+      console.log('imported response:', data)
+      this.cameras = data;
+    })
+  }
 }
