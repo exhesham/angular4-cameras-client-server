@@ -59,9 +59,12 @@ function pupiolate_package(){
 function add_script_permissions(){
 	chmod u+x $CURR_DIR/*
 }
+function restart_shell(){
+	source ~/.bashrc
+}
 install_mjpg_streamer
 pupiolate_package
 add_script_permissions
-
+restart_shell
 
 #./mjpg_streamer -i "./input_uvc.so" -o "./output_http.so -w ./www"
