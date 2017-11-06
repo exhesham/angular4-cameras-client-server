@@ -12,14 +12,6 @@ In my testing environment, The project ran on a raspberry pi2 connected to a wif
 * Raspian
 * up to 4 webcams - The project is tested on Logitec.
 
-## Install
-
-The npm install will run the installation script under `Server/scripts`.
-
-```
-npm install
-```
-
 ### Prerequisites
 
 Expected `nodejs` and `npm` installed on your raspian.
@@ -29,6 +21,16 @@ In order to install nodejs from the node source, run the next commands:
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
+
+
+## Install
+
+The npm install will run the installation script under `Server/scripts`.
+
+```
+npm install
+```
+
 
 ### Start
 
