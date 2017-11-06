@@ -4,7 +4,6 @@
 
 /*Imports*/
 var tcpPortUsed = require('tcp-port-used');
-var child_process = require('child_process');
 var request = require('request');
 var https = require('https');
 var account = require(__dirname + '/accounts');
@@ -19,10 +18,8 @@ var path = require("path");
 /*Internal Imports*/
 var utils = require(__dirname + '/utils.js');
 
-
 /*configurations*/
 var config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
-
 
 /*logger*/
 var logger = require('bunyan').createLogger({
@@ -31,7 +28,6 @@ var logger = require('bunyan').createLogger({
         {path: config.server.logs, level: 'info'}
     ]
 });
-
 
 // web platform
 var app = express();
@@ -58,7 +54,6 @@ var availableCameras = {};
  Request Type: POST
  Body:JSON with the next keys:
  {"username":"","password":""}
-
  */
 app.post('/login', function (req, res) {
     logger.info("Login... The request content is:", req.body);
@@ -88,17 +83,14 @@ app.post('/login', function (req, res) {
     }).catch(function (err) {
         sendStatusCode(res, 401, err);
     });
-
-
 });
 /*****************************************************************************************************************/
 /*
- Servlet Name: streamvideo
+ Servlet Name: /cameras/stream/live
  Request Type: POST
  Body:JSON with the next keys:
  {'cameraName':''}
  */
-
 app.all('/cameras/stream/live', function (req, res) {
     logger.info("streamvideo called:");
     var cameraindex = req.param("cameraindex");
@@ -131,13 +123,10 @@ app.all('/cameras/stream/live', function (req, res) {
                             streamreq.end();
                         })
                     });
-
-
             } else {
                 logger.info("They camera does not exist. redirecting: ", __dirname + "/images/nocamera.jpg")
                 utils.getFile(__dirname + "/WebClient/images/nocamera.jpg", res, "image/jpg");
             }
-
         })
         .catch(function (err) {
             sendStatusCode(res, 401, err);
@@ -166,13 +155,12 @@ request(options, function (error, response, body) {
 var server = https.createServer(options, app).listen(config.server.port, function () {
     logger.info('HTTPS started on port ' + config.server.port);
 });
-server.timeout = 1000 * 60 * 60; // One Hour timeout
 
+server.timeout = 1000 * 60 * 60; // One Hour timeout
 // uncought sudden excepotions:
 process.on('uncaughtException', function (err) {
     var fname = "uncaughtException";
     logger.error('uncaughtException: ' + err.message);
     logger.error(err);
 });
-
 utils.loadAvailableCameras();
