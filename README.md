@@ -12,7 +12,7 @@ In my testing environment, The project ran on a raspberry pi2 connected to a wif
 * Raspian
 * up to 4 webcams - The project is tested on Logitec.
 
-### Prerequisites
+## Prerequisites
 
 Expected `nodejs` and `npm` installed on your raspian.
 
@@ -32,7 +32,7 @@ npm install
 ```
 
 
-### Start
+## Start
 
 after deploying the project from Github and installing the project, run the following commands:
 ````
@@ -47,5 +47,17 @@ The default username/password is admin/admin
 The username and password are located in the config file. the password is md5 hashed.
 
 For more information, go to exhesham.com.
+
+## Upcoming
+
+* Manage mounted Disks
+* Manage Recordings
+* Manage Cameras - Connect/Disconnect
+* Manage Users
+
+
+## Status
+
+The client is not ready yet, after refactoring the code and moving from javascript to angular4, i am still working on stabilizing the client.
 
 
