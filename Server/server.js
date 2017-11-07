@@ -11,7 +11,6 @@ var process = require('process');
 var fs = require('fs');
 var ini = require('ini');
 var bodyParser = require('body-parser');
-var pngjs = require("pngjs");
 var express = require('express');
 var path = require("path");
 
@@ -20,7 +19,7 @@ var utils = require(__dirname + '/utils.js');
 
 /*configurations*/
 var config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
-
+console.log(config.server.logs)
 /*logger*/
 var logger = require('bunyan').createLogger({
     name: 'USR', streams: [
@@ -42,7 +41,7 @@ app.use(bodyParser.json());
 //https key and certificate
 var options = {
     cert: fs.readFileSync(config.server.cert_path),
-    key: fs.readFileSync(config.server.key_path),
+    key: fs.readFileSync(config.server.cert_key_path),
     host: '0.0.0.0'
 };
 
@@ -137,7 +136,7 @@ app.all('/cameras/stream/live', function (req, res) {
  Servlet Name: /cameras/list
  Request Type: GET
  */
-app.post('/cameras/list', function (req, res) {
+app.all('/cameras/list', function (req, res) {
     account.isAuthorized(req, "admin")
         .then(function (data) {
             return ["Cam1", "Cam2", "Cam3", "Cam4"];
@@ -147,10 +146,10 @@ app.post('/cameras/list', function (req, res) {
         });
 });
 /*****************************************************************************************************************/
-request(options, function (error, response, body) {
-    if (error) throw new Error(error);
-    res.send(body);
-});
+// request(options, function (error, response, body) {
+//     if (error) throw new Error(error);
+//     res.send(body);
+// });
 /*****************************************************************************************************************/
 var server = https.createServer(options, app).listen(config.server.port, function () {
     logger.info('HTTPS started on port ' + config.server.port);

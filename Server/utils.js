@@ -1,6 +1,14 @@
 var fs = require('fs');
 var crypto = require('crypto');
 var child_process = require('child_process');
+var ini = require('ini');
+
+var process = require('process');
+var fs = require('fs');
+var ini = require('ini');
+
+/*configurations*/
+var config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
 
 
 /*logger*/
@@ -49,7 +57,7 @@ module.exports.loadAvailableCameras = function() {
     for (i = 0; i < 4; i++) {
         if (fs.existsSync("/dev/video" + i)) {
             availableCameras[i] = true
-            logger.info("availableCameras contains now ", "/dev/video" + i);
+
             loadCamera(i);
         }
     }
