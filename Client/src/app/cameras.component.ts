@@ -10,6 +10,13 @@ import {CameraService} from './cameras.service';
         <mat-grid-tile-header>
           <span mat-line> Camera {{camera.index}} - {{camera.name}} </span>
         </mat-grid-tile-header>
+        <div class="video">
+          <video controls (click)="toggleVideo()" #videoPlayer>
+            <source src="{{camera.videoSource}}" type="video/mp4" />
+            Browser not supported
+          </video>
+        </div>
+        
         {{camera.description}}
         <mat-grid-tile-footer>
           <button mat-button><mat-icon>camera</mat-icon>View</button>
