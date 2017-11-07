@@ -59,12 +59,12 @@ app.post('/login', function (req, res) {
     var requestContent = req.body;
     if (requestContent == undefined || requestContent == null) {
         logger.info("received no data at all");
-        sendStatusCode(res, 401);
+        utils.sendStatusCode(res, 401);
         return;
     }
     if (requestContent.username == undefined || requestContent.password == undefined) {
         logger.info("didnt receive the login data");
-        sendStatusCode(res, 401);
+        utils.sendStatusCode(res, 401);
         return;
 
     }
@@ -80,7 +80,7 @@ app.post('/login', function (req, res) {
         logger.info("Login Success");
 
     }).catch(function (err) {
-        sendStatusCode(res, 401, err);
+        utils.sendStatusCode(res, 401, err);
     });
 });
 /*****************************************************************************************************************/
@@ -128,7 +128,7 @@ app.all('/cameras/stream/live', function (req, res) {
             }
         })
         .catch(function (err) {
-            sendStatusCode(res, 401, err);
+            utils.sendStatusCode(res, 401, err);
         });
 });
 /*****************************************************************************************************************/
@@ -139,10 +139,13 @@ app.all('/cameras/stream/live', function (req, res) {
 app.all('/cameras/list', function (req, res) {
     account.isAuthorized(req, "admin")
         .then(function (data) {
-            return ["Cam1", "Cam2", "Cam3", "Cam4"];
+            logger.info('will return the cameras')
+            utils.sendStatusCode(res, 200, ["Cam1", "Cam2", "Cam3", "Cam4"]);
+
         })
         .catch(function (err) {
-            return [];
+            logger.error('error:', err)
+            utils.sendStatusCode(res, 200, []);
         });
 });
 /*****************************************************************************************************************/

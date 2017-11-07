@@ -64,6 +64,22 @@ module.exports.loadAvailableCameras = function() {
 }
 
 /*****************************************************************************************************************/
+/*****************************************************************************************************************/
+module.exports.sendStatusCode = function(response, statuscode, msg, content_type){
+    logger.info( "Called with status code="+statuscode + " and msg="+msg);
+
+    if(content_type == undefined || content_type == null || content_type == ""){
+        content_type = "text/html; charset=utf-8";
+    }
+    response.writeHead(statuscode, {"Content-Type":content_type});
+    if(msg != undefined && msg != null){
+        response.end(JSON.stringify(msg));
+    }else{
+        response.end();
+    }
+}
+
+/*****************************************************************************************************************/
 module.exports.getFile = function(localPath, res, mimeType) {
     fs.readFile(localPath, function (err, contents) {
         if (!err) {
