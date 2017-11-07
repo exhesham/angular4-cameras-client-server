@@ -70,3 +70,6 @@ add_script_permissions
 restart_shell
 
 #./mjpg_streamer -i "./input_uvc.so" -o "./output_http.so -w ./www"
+
+# install lsinput to list the connected cameras
+apt-get install lsinput -y

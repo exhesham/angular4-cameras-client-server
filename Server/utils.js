@@ -56,14 +56,21 @@ module.exports.loadCamera = function(index, callback) {
 module.exports.loadAvailableCameras = function() {
     for (i = 0; i < 4; i++) {
         if (fs.existsSync("/dev/video" + i)) {
-            availableCameras[i] = true
-
-            loadCamera(i);
+            exports.loadCamera(i);
         }
     }
 }
 
 /*****************************************************************************************************************/
+module.exports.getAvailableCameras= function() {
+    var res = [];
+    for (i = 0; i < 4; i++) {
+        if (fs.existsSync("/dev/video" + i)) {
+            res.add(i)
+        }
+    }
+    return res;
+}
 /*****************************************************************************************************************/
 module.exports.sendStatusCode = function(response, statuscode, msg, content_type){
     logger.info( "Called with status code="+statuscode + " and msg="+msg);

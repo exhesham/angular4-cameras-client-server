@@ -19,7 +19,7 @@ var utils = require(__dirname + '/utils.js');
 
 /*configurations*/
 var config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'))
-console.log(config.server.logs)
+
 /*logger*/
 var logger = require('bunyan').createLogger({
     name: 'USR', streams: [
@@ -44,6 +44,10 @@ var options = {
     key: fs.readFileSync(config.server.cert_key_path),
     host: '0.0.0.0'
 };
+
+/*****************************************************************************************************************/
+// load the cameras to be listenning...
+utils.loadAvailableCameras();
 
 /*****************************************************************************************************************/
 /*
@@ -136,7 +140,8 @@ app.all('/cameras/list', function (req, res) {
     account.isAuthorized(req, "admin")
         .then(function (data) {
             logger.info('will return the cameras')
-            utils.sendStatusCode(res, 200, ["Cam1", "Cam2", "Cam3", "Cam4"]);
+
+            utils.sendStatusCode(res, 200,utils.getAvailableCameras());
 
         })
         .catch(function (err) {
@@ -161,4 +166,3 @@ process.on('uncaughtException', function (err) {
     logger.error('uncaughtException: ' + err.message);
     logger.error(err);
 });
-utils.loadAvailableCameras();
