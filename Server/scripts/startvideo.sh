@@ -54,6 +54,7 @@ while [ -z SHOULD_STOP ]; do
         echo "The MP4 Finished"
         kill -9 $WGET_PID
         kill $MP4_PID
+        pkill -f mjpg
         rm -f $mp4outputfile
 		
 done

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CameraService} from './cameras.service';
 
+// to play a video - refer to https://stackoverflow.com/questions/40360174/playing-html-5-video-from-angular-2-typescript
 @Component({
   selector: 'app-cameras',
   template: `
