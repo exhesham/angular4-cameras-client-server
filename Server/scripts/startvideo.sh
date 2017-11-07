@@ -1,4 +1,8 @@
 #!/bin/bash
+
+export LD_LIBRARY_PATH=/opt/mjpg_streamer/mjpg-streamer/mjpg-streamer/:$LD_LIBRARY_PATH
+export PATH=/opt/mjpg_streamer/mjpg-streamer/mjpg-streamer/:$PATH
+
 #pkill  mjpg_streame
 PARENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 RECORD_DIR="$PARENT_DIR/records"
@@ -16,11 +20,11 @@ fi
 VIDEO_DIR=/dev/video$VIDEO_ID
 echo "will record on video VIDEO_DIR=$VIDEO_DIR"
 nohup mjpg_streamer -i "input_uvc.so  -d $VIDEO_DIR -y YUYV -n -f 15 -r 640x480" -o "output_http.so -w www -p 777$VIDEO_ID" &
-until pids=$(pidof mjpg_streamer)
+until pids=$(pidof /opt/mjpg_streamer/mjpg-streamer/mjpg-streamer/mjpg_streamer)
 do
     sleep 1
 done
-pidof mjpg_streamer
+pidof /opt/mjpg_streamer/mjpg-streamer/mjpg-streamer/mjpg_streamer
 SHOULD_STOP=
 while [ -z SHOULD_STOP ]; do
         mp4outputfile="$RECORD_DIR/mp4outputfile.$VIDEO_ID.`date +%s`.mp4"

@@ -42,6 +42,8 @@ function install_mjpg_streamer(){
 	validate
 	sudo make
 	validate
+	echo "installed mjpg_streamer successfully"
+
 }
 
 function pupiolate_package(){
