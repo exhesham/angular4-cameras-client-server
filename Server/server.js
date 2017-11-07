@@ -46,8 +46,6 @@ var options = {
 };
 
 /*****************************************************************************************************************/
-var availableCameras = {};
-/*****************************************************************************************************************/
 /*
  Servlet Name: login
  Request Type: POST
@@ -93,39 +91,37 @@ app.post('/login', function (req, res) {
 app.all('/cameras/stream/live', function (req, res) {
     logger.info("streamvideo called:");
     var cameraindex = req.param("cameraindex");
-
-    logger.info("will forward to " + "http://127.0.0.1:777" + cameraindex + "/?action=stream")
+    var cameraPort = "777" + cameraindex;
+    logger.info("will forward to " + "http://127.0.0.1:"+cameraPort + "/?action=stream")
     account.isAuthorized(req, "admin")
         .then(function (data) {
-            if (availableCameras[cameraindex] == true) {
-                tcpPortUsed.check(44201, '127.0.0.1')
-                    .then(function (inUse) {
-                        logger.info('Port 44201 usage: ' + inUse);
-                        if (inUse) {
-                            var streamreq = request({url: "http://127.0.0.1:777" + cameraindex + "/?action=stream"})
-                            streamreq.pipe(res).on('finish', function () {
-                                streamreq.end();
-                            });
-                        } else {
-                            logger.info("open port again");
-                            utils.loadCamera(cameraindex, function () {
-                                var streamreq = request({url: "http://127.0.0.1:777" + cameraindex + "/?action=stream"})
-                                streamreq.pipe(res).on('finish', function () {
-                                    streamreq.end();
-                                })
-                            });
-                        }
-                    }, function (err) {
-                        logger.error('Error on check:', err);
-                        var streamreq = request({url: "http://127.0.0.1:777" + cameraindex + "/?action=stream"})
+
+            tcpPortUsed.check(parseInt(cameraPort), '127.0.0.1')      // check if the camera port is in use
+                .then(function (inUse) {
+                    logger.info('Port '+cameraPort+' usage: ' + inUse);
+                    if (inUse) {    // if already streaming then just route
+                        logger.info("the port" + cameraPort + "is in use so we just stream")
+                        var streamreq = request({url: "http://127.0.0.1:"+cameraPort + "/?action=stream"})
                         streamreq.pipe(res).on('finish', function () {
                             streamreq.end();
-                        })
-                    });
-            } else {
-                logger.info("They camera does not exist. redirecting: ", __dirname + "/images/nocamera.jpg")
-                utils.getFile(__dirname + "/WebClient/images/nocamera.jpg", res, "image/jpg");
-            }
+                        });
+                    } else {    // run the script startvideo.sh and then stream
+                        logger.info("the port" + cameraPort + "is not open. will run the script startvidewo.sh on the port")
+                        utils.loadCamera(cameraindex, function () {
+                            var streamreq = request({url: "http://127.0.0.1:"+ cameraPort + "/?action=stream"})
+                            streamreq.pipe(res).on('finish', function () {
+                                streamreq.end();
+                            })
+                        });
+                    }
+                }, function (err) {
+                    logger.error('Error on check:', err);
+                    var streamreq = request({url: "http://127.0.0.1:"+cameraPort + "/?action=stream"})
+                    streamreq.pipe(res).on('finish', function () {
+                        streamreq.end();
+                    })
+                });
+
         })
         .catch(function (err) {
             utils.sendStatusCode(res, 401, err);
