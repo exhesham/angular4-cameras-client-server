@@ -3,8 +3,10 @@
  */
 var crypto = require('crypto')
 var logger = require('bunyan').createLogger({name: 'USR',stream: process.stdout, level: 'info','src':true});
+
+// the password here is hashed.
 var usersRepository  = {
-    "admin" : {"password":"ffff","role":"admin"}
+    "admin" : {"password":"21232f297a57a5a743894a0e4a801fc3","role":"admin"}
 }
 var sessions = {};
 function parseCookies (request) {
@@ -19,10 +21,11 @@ function parseCookies (request) {
     return list;
 }
 module.exports.ValidateLoginCredintials = function(password,username){
+    var predictedPasswordHash = crypto.createHash('md5').update(password).digest('hex');
     return new Promise(function(resolve,reject){
         logger.info("Input params:",password,username);
         if(usersRepository.hasOwnProperty(username)){
-            if(usersRepository[username].password == [password]){
+            if(usersRepository[username].password == predictedPasswordHash){
                 crypto.randomBytes(48, function(ex, buf) {
                     var token = buf.toString('hex');
                     logger.info("New session was added...sending a redirect...");

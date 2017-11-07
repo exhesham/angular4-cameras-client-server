@@ -547,7 +547,7 @@ module.exports = {
     ]
   },
   "output": {
-    "path": path.join(process.cwd(), "../Server/templates"),
+    "path": path.join(process.cwd(), "../Server/public"),
     "filename": "[name].bundle.js",
     "chunkFilename": "[id].chunk.js"
   },
