@@ -66,7 +66,7 @@ module.exports.getAvailableCameras= function() {
     var res = [];
     for (i = 0; i < 4; i++) {
         if (fs.existsSync("/dev/video" + i)) {
-            res.add(i)
+            res.push(i)
         }
     }
     return res;
