@@ -1,0 +1,20 @@
+{
+  "name": "usrcamerasmesh",
+  "version": "1.0.0",
+  "description": "The purpose of this project is to monitor a camera using web interface from anywhere. The quality of this is the live and minimum delay of transferring the video.",
+  "main": "Client",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "chmod u+x ./install.sh;./install.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/exhesham/usrcamerasmesh.git"
+  },
+  "author": "exhesham.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/exhesham/usrcamerasmesh/issues"
+  },
+  "homepage": "https://github.com/exhesham/usrcamerasmesh#readme"
+}
