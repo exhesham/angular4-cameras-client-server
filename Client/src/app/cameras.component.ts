@@ -42,3 +42,4 @@ export class CameraComponent implements OnInit {
     })
   }
 }
+\
